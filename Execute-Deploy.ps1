@@ -46,7 +46,7 @@ Ensure-ArtifactS3BucketExists `
 $artifactName = "$($environmentConfig.ElasticBeanstalk.EnvironmentName)-$Version"
 
 New-WebArtifactArchive `
-    -WebsiteFilePath "$ArtifactPath\XI.Portal.Web.Portal" `
+    -WebsiteFilePath "$ArtifactPath\XI.Portal.Web" `
     -ArchiveName $artifactName `
     -WorkingDirectory $WorkingDirectory
 
