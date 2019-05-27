@@ -4,7 +4,7 @@ param (
     [Parameter(Mandatory = $true)] [String] $AWSAccessKey,
     [Parameter(Mandatory = $true)] [String] $AWSSecretKey,
     [Parameter(Mandatory = $true)] [String] $AWSRegion,
-    [Parameter(Mandatory = $true)] [String] $WebsiteFilePath,
+    [Parameter(Mandatory = $true)] [String] $ArtifactPath,
     [Parameter(Mandatory = $true)] [String] $WorkingDirectory
 )
 
@@ -42,3 +42,10 @@ Ensure-EBEnvironmentExists `
 
 Ensure-ArtifactS3BucketExists `
     -ArtifactS3BucketName $environmentConfig.ArtifactS3Bucket.BucketName
+
+$artifactName = "$($environmentConfig.ElasticBeanstalk.EnvironmentName)-$Version"
+
+New-WebArtifactArchive `
+    -WebsiteFilePath "$ArtifactPath\XI.Portal.Web.Portal" `
+    -ArchiveName $artifactName `
+    -WorkingDirectory $WorkingDirectory
