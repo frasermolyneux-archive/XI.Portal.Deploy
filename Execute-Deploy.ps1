@@ -49,3 +49,8 @@ New-WebArtifactArchive `
     -WebsiteFilePath "$ArtifactPath\XI.Portal.Web.Portal" `
     -ArchiveName $artifactName `
     -WorkingDirectory $WorkingDirectory
+
+Upload-ArtifactArchiveToS3 `
+    -ArtifactS3BucketName $environmentConfig.ArtifactS3Bucket.BucketName `
+    -ArchiveName $artifactName `
+    -WorkingDirectory $WorkingDirectory
