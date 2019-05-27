@@ -54,3 +54,17 @@ Upload-ArtifactArchiveToS3 `
     -ArtifactS3BucketName $environmentConfig.ArtifactS3Bucket.BucketName `
     -ArchiveName $artifactName `
     -WorkingDirectory $WorkingDirectory
+
+Ensure-ArtifactApplicationVersionExists `
+    -ApplicationName $environmentConfig.ElasticBeanstalk.ApplicationName `
+    -ArchiveName $artifactName `
+    -ArtifactS3BucketName $environmentConfig.ArtifactS3Bucket.BucketName
+
+Apply-LatestConfigurationToEnvironment `
+    -ApplicationName $environmentConfig.ElasticBeanstalk.ApplicationName `
+    -Environment $environmentConfig.ElasticBeanstalk.EnvironmentName `
+    -SolutionStackName $environmentConfig.ElasticBeanstalk.SolutionStackName `
+    -TierType $environmentConfig.ElasticBeanstalk.TierType `
+    -TierName $environmentConfig.ElasticBeanstalk.TierName `
+    -OptionSettings $environmentConfig.ElasticBeanstalk.OptionSettings `
+    -VersionLabel $artifactName
