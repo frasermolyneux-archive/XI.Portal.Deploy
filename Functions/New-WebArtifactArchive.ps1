@@ -7,7 +7,7 @@ function New-WebArtifactArchive {
     )
     
     begin {
-        Write-Debug "Begin creating Web artifact archive for $WebsiteFilePath"
+        Write-Debug "Begin creating Web artifact archive $ArchiveName for $WebsiteFilePath in $WorkingDirectory"
     }
     
     process {
@@ -20,6 +20,6 @@ function New-WebArtifactArchive {
     }
     
     end {
-        Write-Debug "End creating Web artifact archive for $WebsiteFilePath"
+        Write-Debug "End creating Web artifact archive $ArchiveName for $WebsiteFilePath in $WorkingDirectory"
     }
 }
