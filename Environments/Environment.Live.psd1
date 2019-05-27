@@ -1,0 +1,5 @@
+@{
+    ElasticBeanstalk  = @{
+        EnvironmentName = "XtremeIdiotsPortal-Live"
+    }
+}
