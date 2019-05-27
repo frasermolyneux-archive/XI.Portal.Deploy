@@ -1,46 +1,36 @@
-function Apply-LatestConfigurationToEnvironment {
+function Ensure-ArtifactApplicationVersionExists {
     [CmdletBinding()]
     param (
         [Parameter(Mandatory = $true)] [String] $ApplicationName,
-        [Parameter(Mandatory = $true)] [String] $EnvironmentName,
-        [Parameter(Mandatory = $true)] [String] $SolutionStackName,
-        [Parameter(Mandatory = $true)] [String] $TierType,
-        [Parameter(Mandatory = $true)] [String] $TierName,
-        [Parameter(Mandatory = $true)] [Array] $OptionSettings,
-        [Parameter(Mandatory = $true)] [String] $VersionLabel
+        [Parameter(Mandatory = $true)] [String] $ArchiveName,
+        [Parameter(Mandatory = $true)] [String] $ArtifactS3BucketName
     )
     
     begin {
-        Write-Debug "Begin applying latest configuration to $EnvironmentName under $ApplicationName"
+        Write-Debug "Begin ensure application version exists named $ArchiveName for $ApplicationName"
     }
     
     process {
 
-        $parameters = @{
-            ApplicationName   = $ApplicationName
-            EnvironmentName   = $EnvironmentName
-            SolutionStackName = $SolutionStackName
-            Tier_Type         = $TierType
-            Tier_Name         = $TierName
-            OptionSettings    = $OptionSettings
-            VersionLabel      = $VersionLabel
-        }
+        $applicationVersion = Get-EBApplicationVersion -VersionLabel $ArchiveName
+        if ($null -eq $applicationVersion) {
+            Write-Information "Creating Application Version $ArchiveName for application $ApplicationName"
 
-        $environment = Get-EBEnvironment -ApplicationName $ApplicationName -EnvironmentName $EnvironmentName
-        if ($null -eq $environment) {
-            Write-Error "Environment $EnvironmentName under $ApplicationName does not exist"
+            $params = @{
+                ApplicationName       = $ApplicationName
+                VersionLabel          = $ArchiveName
+                SourceBundle_S3Bucket = $ArtifactS3BucketName
+                SourceBundle_S3Key    = "$ArchiveName.zip"
+            }
+            New-EBApplicationVersion @params
         }
         else {
-            $parameters.EnvironmentId = $environment.EnvironmentId
-
-            Write-Information "Applying latest configuration for environment $EnvironmentName under $ApplicationName"
-            Update-EBEnvironment @parameters
-            Write-Information "Finished applying latest configuration for environment $EnvironmentName under $ApplicationName"
+            Write-Information "Application Version $ArchiveName already exists for application $ApplicationName"
         }
 
     }
     
     end {
-        Write-Debug "End applying latest configuration to $EnvironmentName under $ApplicationName"
+        Write-Debug "End ensure application version exists named $ArchiveName for $ApplicationName"
     }
 }
