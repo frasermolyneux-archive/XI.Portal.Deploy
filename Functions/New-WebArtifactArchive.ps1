@@ -16,7 +16,7 @@ function New-WebArtifactArchive {
             Remove-Item -Path "$WorkingDirectory\$ArchiveName.zip" -Force
         }
 
-        Compress-Archive -Path "$WebsiteFilePath" -CompressionLevel Optimal -DestinationPath "$WorkingDirectory\$ArchiveName.zip"
+        Compress-Archive -Path "$WebsiteFilePath\*" -CompressionLevel Optimal -DestinationPath "$WorkingDirectory\$ArchiveName.zip"
     }
     
     end {
