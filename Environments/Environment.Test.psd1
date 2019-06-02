@@ -7,7 +7,7 @@
         ## App Settings
         @{
             Namespace  = "aws:elasticbeanstalk:application:environment"
-            OptionName = "AwsSecretName"
+            OptionName = "AwsPortalSecretName"
             Value      = "xi-portal-test"
         }
     )
