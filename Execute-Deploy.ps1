@@ -1,11 +1,14 @@
 param (
+    [Parameter(Mandatory = $true)] [String] $DeployScriptsPath,
     [Parameter(Mandatory = $true)] [String] $Environment,
     [Parameter(Mandatory = $true)] [String] $Version,
     [Parameter(Mandatory = $true)] [String] $AWSAccessKey,
     [Parameter(Mandatory = $true)] [String] $AWSSecretKey,
     [Parameter(Mandatory = $true)] [String] $AWSRegion,
     [Parameter(Mandatory = $true)] [String] $ArtifactPath,
-    [Parameter(Mandatory = $true)] [String] $WorkingDirectory
+    [Parameter(Mandatory = $true)] [String] $WorkingDirectory,
+    [Parameter(Mandatory = $true)] [String] $ApplicationAwsAccessKey,
+    [Parameter(Mandatory = $true)] [String] $ApplicationAwsSecretKey
 )
 
 Install-Module -Name AWSPowerShell -Force
@@ -14,17 +17,25 @@ Import-Module -Name AWSPowerShell
 $InformationPreference = 'Continue'
 $DebugPreference = 'Continue'
 $VerbosePreference = 'Continue'
-
 $ErrorActionPreference = "Stop"
 
-Get-ChildItem -Path "$PSScriptRoot/Functions" -Filter "*.ps1" | ForEach-Object {
-    . $_.FullName
-    Write-Debug "Importing function file $($_.FullName)"
-}
+. "$DeployScriptsPath\Import-DeployScripts.ps1"
 
 Write-Information "Executing XI Portal deployment to AWS for environment $Environment"
 
-$environmentConfig = Import-EnvironmentConfig -Environment $Environment
+$environmentConfig = Import-EnvironmentConfig -Environment $Environment -ConfigDir "$PSScriptRoot\Environments"
+
+$environmentConfig.ElasticBeanstalk.OptionSettings += @{
+    Namespace  = "aws:elasticbeanstalk:application:environment"
+    OptionName = "AwsAccessKey"
+    Value      = $ApplicationAwsAccessKey
+}
+
+$environmentConfig.ElasticBeanstalk.OptionSettings += @{
+    Namespace  = "aws:elasticbeanstalk:application:environment"
+    OptionName = "AwsSecretKey"
+    Value      = $ApplicationAwsSecretKey
+}
 
 Set-AWSCredential -AccessKey $AWSAccessKey -SecretKey $AWSSecretKey -StoreAs "default"
 Set-DefaultAWSRegion -Region $AWSRegion
