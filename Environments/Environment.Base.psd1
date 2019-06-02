@@ -68,6 +68,13 @@
                 OptionName = "SystemType"
                 Value      = "enhanced"
             }
+
+            ## App Settings
+            @{
+                Namespace  = "aws:elasticbeanstalk:application:environment"
+                OptionName = "AwsRegion"
+                Value      = "us-east-2"
+            }
         )
     }
 
