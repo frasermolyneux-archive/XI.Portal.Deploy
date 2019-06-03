@@ -40,6 +40,9 @@ $environmentConfig.ElasticBeanstalk.OptionSettings += @{
 Set-AWSCredential -AccessKey $AWSAccessKey -SecretKey $AWSSecretKey -StoreAs "default"
 Set-DefaultAWSRegion -Region $AWSRegion
 
+Ensure-AwsRdsSecurityGroupExists `
+    -Environment $environmentConfig.ElasticBeanstalk.EnvironmentName
+
 Ensure-EBApplicationExists `
     -ApplicationName $environmentConfig.ElasticBeanstalk.ApplicationName
 
