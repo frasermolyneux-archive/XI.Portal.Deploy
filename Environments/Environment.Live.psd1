@@ -3,6 +3,18 @@
         EnvironmentName = "XtremeIdiotsPortal-Live"
 
         OptionSettings    = @(
+            ## Auto Scaling
+            @{
+                Namespace  = "aws:autoscaling:asg"
+                OptionName = "MinSize"
+                Value      = "1"
+            }
+            @{
+                Namespace  = "aws:autoscaling:asg"
+                OptionName = "MaxSize"
+                Value      = "1"
+            }
+
             ## App Settings
             @{
                 Namespace  = "aws:elasticbeanstalk:application:environment"
