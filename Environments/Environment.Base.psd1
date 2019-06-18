@@ -65,6 +65,11 @@
                 OptionName = "AwsRegion"
                 Value      = "us-east-2"
             }
+            @{
+                Namespace  = "aws:elasticbeanstalk:application:environment"
+                OptionName = "GeoLocationServiceUrl"
+                Value      = "http://geolocation-prd.2iwteg8pdg.us-east-2.elasticbeanstalk.com"
+            }
         )
     }
 
