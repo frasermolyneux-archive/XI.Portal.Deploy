@@ -70,6 +70,11 @@
                 OptionName = "GeoLocationServiceUrl"
                 Value      = "http://geolocation-prd.2iwteg8pdg.us-east-2.elasticbeanstalk.com"
             }
+            @{
+                Namespace  = "aws:elasticbeanstalk:application:environment"
+                OptionName = "MapRedirectBaseUrl"
+                Value      = "http://redirect.xtremeidiots.net"
+            }
         )
     }
 
