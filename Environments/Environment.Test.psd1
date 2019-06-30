@@ -19,7 +19,7 @@
             @{
                 Namespace  = "aws:autoscaling:launchconfiguration"
                 OptionName = "InstanceType"
-                Value      = "t2.nano"
+                Value      = "t2.micro"
             }
         )
     }
