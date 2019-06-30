@@ -19,11 +19,6 @@
                 OptionName = "IamInstanceProfile"
                 Value      = "aws-elasticbeanstalk-ec2-role"
             }
-            @{
-                Namespace  = "aws:autoscaling:launchconfiguration"
-                OptionName = "InstanceType"
-                Value      = "t2.micro"
-            }
 
             ## Reporting
             @{

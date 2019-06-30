@@ -14,6 +14,13 @@
                 OptionName = "DemoManagerBucketName"
                 Value      = "demomanager-prd"
             }
+
+            ## Auto Scaling
+            @{
+                Namespace  = "aws:autoscaling:launchconfiguration"
+                OptionName = "InstanceType"
+                Value      = "t2.micro"
+            }
         )
     }
 }
