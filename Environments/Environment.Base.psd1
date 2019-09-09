@@ -36,7 +36,7 @@
             @{
                 Namespace  = "aws:elasticbeanstalk:application:environment"
                 OptionName = "GeoLocationServiceUrl"
-                Value      = "https://geolocation.xtre.co.uk"
+                Value      = "https://geolocation.xtre.co.uk/Prod"
             }
             @{
                 Namespace  = "aws:elasticbeanstalk:application:environment"
