@@ -8,7 +8,9 @@ param (
     [Parameter(Mandatory = $true)] [String] $ArtifactPath,
     [Parameter(Mandatory = $true)] [String] $WorkingDirectory,
     [Parameter(Mandatory = $true)] [String] $ApplicationAwsAccessKey,
-    [Parameter(Mandatory = $true)] [String] $ApplicationAwsSecretKey
+    [Parameter(Mandatory = $true)] [String] $ApplicationAwsSecretKey,
+    [Int] $MinInstances = 1,
+    [Int] $MaxInstances = 1
 )
 
 Install-Module -Name AWSPowerShell -Force
@@ -35,6 +37,18 @@ $environmentConfig.ElasticBeanstalk.OptionSettings += @{
     Namespace  = "aws:elasticbeanstalk:application:environment"
     OptionName = "AwsSecretKey"
     Value      = $ApplicationAwsSecretKey
+}
+
+$environmentConfig.ElasticBeanstalk.OptionSettings += @{
+    Namespace  = "aws:autoscaling:asg"
+    OptionName = "MinSize"
+    Value      = $MinInstances
+}
+
+$environmentConfig.ElasticBeanstalk.OptionSettings += @{
+    Namespace  = "aws:autoscaling:asg"
+    OptionName = "MaxSize"
+    Value      = $MaxInstances
 }
 
 Set-AWSCredential -AccessKey $AWSAccessKey -SecretKey $AWSSecretKey -StoreAs "default"
